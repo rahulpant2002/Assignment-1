@@ -1,1 +1,67 @@
-<p>dash-board works!</p>
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <div class="header-title">
+            <h2>Task Dashboard</h2>
+            <p>Manage and track your tasks</p>
+        </div>
+        <button class="back-button" (click)="goBackHome()">Back to Home</button>
+    </header>
+
+    <section class="summary-cards">
+        <div class="summary-card">
+            <h4>Total Tasks</h4>
+            <span>{{ totalTasks }}</span>
+        </div>
+        <div class="summary-card">
+            <h4>Pending</h4>
+            <span>{{ pendingTasks }}</span>
+        </div>
+        <div class="summary-card">
+            <h4>In Progress</h4>
+            <span>{{ inProgressTasks }}</span>
+        </div>
+        <div class="summary-card">
+            <h4>Completed</h4>
+            <span>{{ completedTasks }}</span>
+        </div>
+    </section>
+
+    <section class="filters">
+        <h4>Filters & Search</h4>
+    </section>
+
+    <section class="task-list">
+        <div class="task-item" *ngFor="let task of taskList, let i = index">
+            <div class="task-details">
+                <h3>{{ task.taskTitle }}</h3>
+                <p>{{ task.description }}</p>
+                <div class="task-meta">
+                    <span class="due-date">Due: {{ task.dueDate | date: 'MMM d, yyyy' }}</span>
+                </div>
+            </div>
+            <div class="task-tags">
+
+                <select class="status-select" [(ngModel)]="task.status" (change)="saveTasks()">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <span class="tag priority-tag" [ngClass]="{
+                'priority-high': task.priority === 'High Priority',
+                'priority-medium': task.priority === 'Medium Priority',
+                'priority-low': task.priority === 'Low Priority'
+              }">
+                    {{ task.priority }}
+                </span>
+
+                <span id="delete" (click)="deleteItem(i)">Delete🗑️</span>
+                
+                
+            </div>
+        </div>
+        <div *ngIf="taskList.length === 0" class="no-tasks">
+            <p>No tasks found. Go back home to create one!</p>
+        </div>
+    </section>
+</div>

@@ -13,7 +13,7 @@
            Tasks Today
          </div>
          <div class="task-card-body">
-           <span class="task-count">0</span>
+           <span class="task-count">{{tasksToday}}</span>
            <button class="add-button">+</button>
          </div>
        </div>
@@ -23,7 +23,7 @@
            In Progress
          </div>
          <div class="task-card-body">
-           <span class="task-count">0</span>
+           <span class="task-count">{{inProgress}}</span>
            <button class="add-button">+</button>
          </div>
        </div>
@@ -33,7 +33,7 @@
            Completed
          </div>
          <div class="task-card-body">
-           <span class="task-count">0</span>
+           <span class="task-count">{{completed}}</span>
            <button class="add-button">+</button>
          </div>
        </div>
@@ -47,8 +47,8 @@
        </div>
 
        <div class="form-group">
-         <label for="dueDate">Due Date</label>
-         <input type="date" id="dueDate" formControlName="dueDate">
+         <label for="dueDate" >Due Date</label>
+         <input type="date" id="dueDate" formControlName="dueDate" [min]="todayDate">
        </div>
 
        <div class="form-group">
@@ -59,7 +59,7 @@
        <div class="form-group">
          <label for="priority">Priority</label>
          <select id="priority" formControlName="priority">
-            <option selected disabled>Select priority</option>
+            <option [ngValue]="null" disabled>Select priority</option>
            <option>Medium Priority</option>
            <option>High Priority</option>
            <option>Low Priority</option>

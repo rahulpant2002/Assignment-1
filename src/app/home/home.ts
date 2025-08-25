@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,16 +9,26 @@ import { Router } from '@angular/router';
   styleUrl: './home.scss', standalone: true
 })
 
-export class Home {
+export class Home implements OnInit {
   taskForm : FormGroup;
   isSubmitted = false;
+  todayDate: string;
+  tasksToday = 0;
+  inProgress = 0;
+  completed = 0;
+
+  ngOnInit(): void {
+    this.calculateParameters(); 
+  }
 
   constructor(private router : Router) {
+    this.todayDate = new Date().toISOString().split('T')[0];
     this.taskForm = new FormGroup({
       taskTitle : new FormControl('', [Validators.required, Validators.minLength(3)]),
       dueDate : new FormControl('', Validators.required),
       description : new FormControl(''),
-      priority : new FormControl('', Validators.required)
+      priority : new FormControl(null, Validators.required),
+      status : new FormControl('Pending')
     });
   }
 
@@ -47,6 +57,23 @@ export class Home {
 }
   goToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  calculateParameters(): void {
+    try {
+      const storedTasks = localStorage.getItem('taskList');
+      if (storedTasks) {
+        const taskList = JSON.parse(storedTasks);
+        this.tasksToday = taskList.filter((task: { dueDate: string; }) => task.dueDate === this.todayDate).length;
+        this.inProgress = taskList.filter((task: { status: string; }) => task.status === 'In Progress').length;
+        this.completed = taskList.filter((task: { status: string; }) => task.status === 'Completed').length;
+      }
+    } catch (e) {
+      console.error("Error parsing tasks from localStorage", e);
+      this.tasksToday = 0; 
+      this.inProgress = 0;
+      this.completed = 0;
+    }
   }
 
 }
