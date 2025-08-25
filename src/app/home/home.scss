@@ -1,0 +1,149 @@
+/* Home Component SCSS (home.component.scss) */
+.task-management-app {
+  font-family: sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .header-actions {
+      button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+
+  main {
+    margin-top: 20px;
+
+    .task-summary {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+
+      .task-card {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        flex: 1;
+        text-align: center;
+
+        .task-card-header {
+          font-weight: bold;
+          color: #555;
+          margin-bottom: 10px;
+        }
+
+        .task-card-body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+
+          .task-count {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+          }
+
+          .add-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #1e7e34;
+            }
+          }
+        }
+      }
+    }
+
+    .create-new-task {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+
+      h2 {
+        color: #333;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+
+        label {
+          display: block;
+          margin-bottom: 5px;
+          color: #555;
+          font-weight: bold;
+          font-size: 14px;
+        }
+
+        input,
+        textarea,
+        select {
+          width: calc(100% - 12px);
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 16px;
+        }
+
+        textarea {
+          min-height: 80px;
+        }
+      }
+
+      .create-task-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+}

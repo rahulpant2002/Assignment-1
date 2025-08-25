@@ -1,0 +1,72 @@
+<div class="task-management-app">
+   <header>
+     <h1>Task Management Application</h1>
+     <div class="header-actions">
+       <button (click)="goToDashboard()" >View Dashboard</button>
+     </div>
+   </header>
+
+   <main>
+     <section class="task-summary">
+       <div class="task-card">
+         <div class="task-card-header">
+           Tasks Today
+         </div>
+         <div class="task-card-body">
+           <span class="task-count">0</span>
+           <button class="add-button">+</button>
+         </div>
+       </div>
+
+       <div class="task-card">
+         <div class="task-card-header">
+           In Progress
+         </div>
+         <div class="task-card-body">
+           <span class="task-count">0</span>
+           <button class="add-button">+</button>
+         </div>
+       </div>
+
+       <div class="task-card">
+         <div class="task-card-header">
+           Completed
+         </div>
+         <div class="task-card-body">
+           <span class="task-count">0</span>
+           <button class="add-button">+</button>
+         </div>
+       </div>
+     </section>
+
+     <form class="create-new-task" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+       <h2>+ Create New Task</h2>
+       <div class="form-group">
+         <label for="taskTitle">Task Title *</label>
+         <input type="text" id="taskTitle" formControlName="taskTitle" placeholder="Enter task title...">  
+       </div>
+
+       <div class="form-group">
+         <label for="dueDate">Due Date</label>
+         <input type="date" id="dueDate" formControlName="dueDate">
+       </div>
+
+       <div class="form-group">
+         <label for="description">Description</label>
+         <textarea id="description" placeholder="Add task description..." formControlName="description"></textarea>
+       </div>
+
+       <div class="form-group">
+         <label for="priority">Priority</label>
+         <select id="priority" formControlName="priority">
+            <option selected disabled>Select priority</option>
+           <option>Medium Priority</option>
+           <option>High Priority</option>
+           <option>Low Priority</option>
+         </select>
+       </div>
+
+       <button class="create-task-button">+ Create Task</button>
+     </form>
+   </main>
+ </div>
