@@ -28,11 +28,29 @@
 
     <section class="filters">
         <h4>Filters & Search</h4>
+        <div class="filter-controls">
+            <input type="text" class="search-input" placeholder="Search tasks..." [(ngModel)]="searchText"
+                (input)="applyFilters()">
+    
+            <select class="filter-select" [(ngModel)]="selectedStatus" (change)="applyFilters()">
+                <option>All Status</option>
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+            </select>
+    
+            <select class="filter-select" [(ngModel)]="selectedPriority" (change)="applyFilters()">
+                <option>All Priorities</option>
+                <option>High Priority</option>
+                <option>Medium Priority</option>
+                <option>Low Priority</option>
+            </select>
+        </div>
     </section>
 
     <section class="task-list">
-        <div class="task-item" *ngFor="let task of taskList, let i = index">
-            <div class="task-details">
+        <a class="task-item" *ngFor="let task of filteredTaskList, let i = index">
+            <div class="task-details" >
                 <h3>{{ task.taskTitle }}</h3>
                 <p>{{ task.description }}</p>
                 <div class="task-meta">
@@ -41,7 +59,8 @@
             </div>
             <div class="task-tags">
 
-                <select class="status-select" [(ngModel)]="task.status" (change)="saveTasks()">
+                <select class="status-select" [(ngModel)]="task.status" (change)="saveTasks()"
+                    [aria-label]="'Status for task ' + task.taskTitle">
                     <option value="Pending">Pending</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
@@ -56,10 +75,13 @@
                 </span>
 
                 <span id="delete" (click)="deleteItem(i)">Delete🗑️</span>
-                
+                <div id="edit" [routerLink]="['/task', i]">
+                    Edit🖊️
+                </div>
                 
             </div>
-        </div>
+            
+        </a>
         <div *ngIf="taskList.length === 0" class="no-tasks">
             <p>No tasks found. Go back home to create one!</p>
         </div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule} from '@angular/common'; // Import CommonModule and DatePipe
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dash-board',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dash-board.html',
   styleUrl: './dash-board.scss', standalone: true
 })
@@ -18,10 +18,16 @@ export class DashBoard implements OnInit {
   inProgressTasks = 0;
   completedTasks = 0;
 
+  searchText = '';
+  selectedStatus = 'All Status';
+  selectedPriority = 'All Priorities';
+  filteredTaskList: any[] = [];
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loadTasks();
+    this.applyFilters();
   }
 
   loadTasks(): void {
@@ -36,6 +42,37 @@ export class DashBoard implements OnInit {
       this.taskList = []; 
     }
   }
+
+
+  applyFilters(): void {
+    let filteredData = this.taskList;
+      
+    const searchText = this.searchText.toLowerCase();
+    if(searchText == '' && this.selectedStatus === 'All Status' && this.selectedPriority === 'All Priorities'){
+      this.filteredTaskList = this.taskList;
+      return;
+    }
+
+    if (searchText) {
+      filteredData = filteredData.filter(task =>
+        task.taskTitle.toLowerCase().includes(searchText)
+      );
+    }
+
+    // 2. Filter by Status
+    if (this.selectedStatus !== 'All Status') {
+      filteredData = filteredData.filter(task => task.status === this.selectedStatus);
+    }
+
+    // 3. Filter by Priority
+    if (this.selectedPriority !== 'All Priorities') {
+      filteredData = filteredData.filter(task => task.priority === this.selectedPriority);
+    }
+
+    // Update the list that is displayed in the template
+    this.filteredTaskList = filteredData;
+  }
+
 
   saveTasks(): void {
     try {
